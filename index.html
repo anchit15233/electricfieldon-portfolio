@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f0e9">
+  <meta name="description" content="A curated writing archive for electricfieldon — poems, shayari, reflections and fragments beyond the feed.">
+  <title>electricfieldon — a writing archive</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="paper-grain" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="wordmark" href="#top" aria-label="electricfieldon home">electricfieldon<span>.</span><small>A WRITING ARCHIVE</small></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-link active" href="#featured">Featured</a>
+      <a class="nav-link" href="#collections">Browse by mood</a>
+      <a class="nav-link" href="#archive">All posts</a>
+      <a class="nav-link" href="#about">About</a>
+    </nav>
+    <a class="instagram-link" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
+    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+  </header>
+
+  <main id="top">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="eyebrow-line"></span> NOTES FROM THE FEED, KEPT TOGETHER</div>
+        <h1 id="hero-title">A place for<br><em>words to stay.</em></h1>
+        <p class="hero-intro">Poems, shayari, reflections, and little fragments of feeling — gathered beyond the endless scroll.</p>
+        <div class="hero-actions">
+          <a class="button button-dark" href="#featured">Explore featured work <span aria-hidden="true">↓</span></a>
+          <a class="quiet-link" href="#archive">Browse all posts ↓</a>
+        </div>
+        <div class="hero-footnote"><span class="tiny-star">✳</span> ORIGINAL ARTWORK · A MORE ORDERED WAY TO READ</div>
+      </div>
+      <div class="hero-art" aria-label="Selected writing posts">
+        <div class="art-shadow"></div>
+        <figure class="art-frame art-frame-back"><img id="hero-image-back" alt="Original writing post artwork"></figure>
+        <figure class="art-frame art-frame-front"><img id="hero-image-front" alt="Original writing post artwork"></figure>
+        <div class="art-note"><span>THE WRITING ARCHIVE</span><strong>Read slowly.</strong><i>Keep what stays.</i></div>
+        <div class="art-index">001 — ∞</div>
+      </div>
+    </section>
+
+    <section class="stats-strip wrap" aria-label="Archive overview">
+      <div><strong id="stat-posts">—</strong><span>pieces in the archive</span></div>
+      <div><strong id="stat-carousels">—</strong><span>multi-slide posts</span></div>
+      <div><strong>One home</strong><span>for every kind of writing</span></div>
+      <div class="stats-mark" aria-hidden="true">✳</div>
+    </section>
+
+    <section id="featured" class="featured-section wrap">
+      <div class="section-heading featured-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> A FEW PIECES TO BEGIN WITH</div><h2>Featured <em>work.</em></h2></div>
+        <p>A small selection from the archive. Open any piece to see the original artwork or move through its carousel slides.</p>
+      </div>
+      <div class="featured-grid" id="featured-grid" aria-label="Featured writing"></div>
+      <div class="featured-more"><a class="quiet-link" href="#archive">Explore all posts in the archive ↓</a></div>
+    </section>
+
+    <section id="collections" class="collections-section wrap">
+      <div class="section-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> FOLLOW A FEELING</div><h2>Browse by <em>mood.</em></h2></div>
+        <p>A single piece can belong to more than one shelf. Let the words find you where you are.</p>
+      </div>
+      <div class="collection-grid" id="collection-grid"></div>
+    </section>
+
+    <section id="archive" class="archive-section wrap">
+      <div class="archive-heading">
+        <div><div class="eyebrow"><span class="eyebrow-line"></span> EVERY POST, IN ONE PLACE</div><h2>All <em>posts.</em></h2></div>
+        <div class="archive-count" id="results-count">Loading writing…</div>
+      </div>
+      <div class="filter-panel">
+        <div class="archive-tools">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search the archive…" autocomplete="off"></label>
+          <button id="filters-toggle" class="filter-toggle" type="button" aria-expanded="false" aria-controls="archive-filters">Filters <span aria-hidden="true">＋</span></button>
+        </div>
+        <div class="filter-row" id="archive-filters">
+          <label class="select-label"><span>LANGUAGE</span><select id="filter-language"><option value="">All languages</option></select></label>
+          <label class="select-label"><span>FORM</span><select id="filter-type"><option value="">All forms</option></select></label>
+          <label class="select-label"><span>THEME</span><select id="filter-theme"><option value="">All themes</option></select></label>
+          <label class="select-label"><span>FORMAT</span><select id="filter-format"><option value="">All formats</option><option value="single">Single post</option><option value="carousel">Carousel</option></select></label>
+          <label class="select-label sort-label"><span>SORT</span><select id="sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label>
+          <button id="clear-filters" class="clear-filters" type="button">Clear all ×</button>
+        </div>
+      </div>
+      <div class="post-grid" id="post-grid" aria-live="polite"></div>
+      <div class="empty-state" id="empty-state" hidden><span>✳</span><h3>No words found here.</h3><p>Try a different search or clear the filters.</p><button class="button button-outline" id="empty-clear" type="button">Clear filters</button></div>
+      <div class="archive-bottom"><span class="archive-bottom-mark">✳</span><p>Every piece has its own shape.<br><em>Every reader finds a different line.</em></p><span class="archive-bottom-mark">✳</span></div>
+    </section>
+
+    <section id="about" class="about-section">
+      <div class="about-inner wrap">
+        <div class="about-symbol" aria-hidden="true">e<span>.</span></div>
+        <div class="about-copy"><div class="eyebrow"><span class="eyebrow-line"></span> A NOTE ABOUT THIS SPACE</div><h2>Same words.<br><em>A softer way to find them.</em></h2><p>This is a companion to <strong>@electricfieldon</strong> — a home for work originally shared on Instagram. Posts are shown as supplied, with their artwork and carousel order kept intact. The archive simply gives them shelves: by language, form, feeling, and collection.</p><a class="quiet-link" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Back to the original feed ↗</a></div>
+        <div class="about-side"><span>KEEP THE ARTWORK.</span><span>MAKE ROOM TO READ.</span><span>LET WORDS FIND THEIR PEOPLE.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer wrap"><a class="footer-wordmark" href="#top">electricfieldon<span>.</span></a><span>A small library for words that stay.</span><a href="#top">Back to top ↑</a></footer>
+
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+    <button class="viewer-backdrop" data-close-viewer aria-label="Close viewer"></button>
+    <div class="viewer-panel">
+      <div class="viewer-top"><span class="viewer-kicker">THE ARCHIVE · <span id="viewer-number"></span></span><button class="viewer-close" type="button" data-close-viewer aria-label="Close">×</button></div>
+      <div class="viewer-body">
+        <div class="viewer-artwork"><button class="slide-arrow slide-prev" id="slide-prev" type="button" aria-label="Previous slide">‹</button><img id="viewer-image" alt="Original writing post slide"><button class="slide-arrow slide-next" id="slide-next" type="button" aria-label="Next slide">›</button><div class="slide-counter" id="slide-counter"></div></div>
+        <aside class="viewer-details"><div class="eyebrow"><span class="eyebrow-line"></span> <span id="viewer-format">WRITING</span></div><h2 id="viewer-title">A piece of writing</h2><p class="viewer-date" id="viewer-date"></p><div class="viewer-tags" id="viewer-tags"></div><div class="viewer-caption" id="viewer-caption"></div><div class="viewer-actions"><a class="button button-dark" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Visit Instagram ↗</a><button class="button button-outline" id="copy-title" type="button">Copy caption</button></div><p class="viewer-note">Artwork is displayed without cropping or restyling. Use the arrows to move through carousel slides.</p></aside>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Small progressive enhancement: mobile nav opens without a framework.
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.main-nav');
+      btn?.addEventListener('click', () => {
+        const open = nav.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+      nav?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        nav.classList.remove('is-open'); btn?.setAttribute('aria-expanded','false');
+        nav.querySelectorAll('a').forEach(link => link.classList.toggle('active', link === a));
+      }));
+    });
+  </script>
+</body>
+</html>
