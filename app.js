@@ -17,6 +17,19 @@
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
   }[c]));
   const decodeCaption = (value = '') => String(value).replace(/\n{3,}/g, '\n\n').trim();
+  // Removes hashtags (including Hindi/Urdu ones) and a caption that is only dots or the ✍️ sign.
+  const cleanCaption = (value = '') => {
+    const text = decodeCaption(value).replace(/#[\p{L}\p{M}\p{N}_]+/gu, '').replace(/[ \t]+\n/g, '\n').trim();
+    return /^[.\s…✍️\uFE0F]*$/u.test(text) ? '' : text;
+  };
+  // Piece numbers count from the oldest post, so adding new posts never renumbers old ones.
+  const PIECE_NUMBERS = new Map(POSTS.slice()
+    .sort((a, b) => (new Date(a.date).getTime() || 0) - (new Date(b.date).getTime() || 0))
+    .map((post, index) => [String(post.id), index + 1]));
+  const pieceNumber = post => PIECE_NUMBERS.get(String(post.id)) || post.post_number;
+  const pieceLabel = post => `PIECE ${String(pieceNumber(post)).padStart(3, '0')}`;
+  const HIDDEN_LANGUAGE = 'Needs review';
+  const thumbSrc = src => String(src || '').replace(/^assets\/media\//, 'assets/thumbs/');
   const tagsOf = post => post.tags || { language: 'Needs review', writing_type: 'Writing', themes: [], collections: [] };
   const themes = post => tagsOf(post).themes || [];
   const form = post => tagsOf(post).writing_type || 'Writing';
@@ -30,7 +43,13 @@
   };
   const cardTitle = post => {
     const caption = meaningfulCaption(post);
-    if (caption) return caption.length > 72 ? caption.slice(0, 69).trimEnd() + '…' : caption;
+    if (caption) {
+      // Captions often already end in "..."; strip it before adding a single ellipsis.
+      const base = caption.replace(/(\.{2,}|…)+\s*$/u, '').trimEnd();
+      const trailing = base.length < caption.length;
+      if (base.length > 72) return base.slice(0, 69).replace(/\s+\S*$/, '').trimEnd() + '…';
+      return trailing ? base + '…' : base;
+    }
     if (form(post) === 'Shayari') return 'A little shayari';
     if (themes(post).includes('Love & longing')) return 'Fragments of feeling';
     if (themes(post).includes('Life & reflection')) return 'A thought to keep';
@@ -55,6 +74,10 @@
       el.target = '_blank';
       el.rel = 'noreferrer';
     });
+    renderNav();
+  }
+
+  function renderNav() {
     const nav = $('#main-nav');
     if (nav) {
       const links = Array.isArray(CONFIG.navigation) ? CONFIG.navigation : [];
@@ -68,12 +91,15 @@
   }
 
   function initMobileNavigation() {
+    if (page === 'home') window.addEventListener('hashchange', () => {
+      if (window.location.hash === '#featured' || window.location.hash === '#collections') { renderNav(); bindNavClose(); }
+    });
+    bindNavClose();
+  }
+
+  function bindNavClose() {
     const button = $('.menu-toggle');
     const nav = $('#main-nav');
-    button?.addEventListener('click', () => {
-      const open = nav?.classList.toggle('is-open') || false;
-      button.setAttribute('aria-expanded', String(open));
-    });
     nav?.querySelectorAll('a').forEach(anchor => anchor.addEventListener('click', () => {
       nav.classList.remove('is-open');
       button?.setAttribute('aria-expanded', 'false');
@@ -83,11 +109,11 @@
   function postCardMarkup(post, featured = false) {
     const first = post.media && post.media[0];
     if (!first) return '';
-    const tags = [...new Set([...(themes(post) || []), ...(lang(post) !== 'Needs review' ? [lang(post)] : []), form(post)])]
+    const tags = [...new Set([...(themes(post) || []), ...(lang(post) !== HIDDEN_LANGUAGE ? [lang(post)] : []), form(post)])]
       .slice(0, 3).map(tag => `<span class="post-tag">${esc(tag)}</span>`).join('');
     return `<article class="post-card${featured ? ' featured-card' : ''}" tabindex="0" role="button" aria-label="Open ${esc(cardTitle(post))}" data-post-id="${esc(post.id)}">
-      <div class="post-image-wrap"><img class="post-image" src="${esc(first.src)}" alt="Original writing artwork, post ${esc(post.post_number)}" loading="lazy" decoding="async">${featured ? '<span class="featured-stamp">FEATURED</span>' : ''}<span class="post-format-badge">${post.format === 'carousel' ? '▧ ' + post.media_count + ' SLIDES' : '✳ SINGLE'}</span></div>
-      <div class="post-card-meta"><span class="post-card-num">PIECE ${String(post.post_number).padStart(3, '0')}</span><span class="post-card-date">${esc(shortDate(post))}</span></div>
+      <div class="post-image-wrap"><img class="post-image" src="${esc(thumbSrc(first.src))}" data-full-src="${esc(first.src)}" alt="Original writing artwork, piece ${esc(pieceNumber(post))}" loading="lazy" decoding="async">${featured ? '<span class="featured-stamp">FEATURED</span>' : ''}<span class="post-format-badge">${post.format === 'carousel' ? '▧ ' + post.media_count + ' SLIDES' : '✳ SINGLE'}</span></div>
+      <div class="post-card-meta"><span class="post-card-num">${pieceLabel(post)}</span><span class="post-card-date">${esc(shortDate(post))}</span></div>
       <h3 class="post-card-title">${esc(cardTitle(post))}</h3><div class="post-card-tags">${tags}</div>
     </article>`;
   }
@@ -95,8 +121,11 @@
   function wirePostCards(rootSelector) {
     const root = $(rootSelector);
     if (!root) return;
+    $$('.post-card img[data-full-src]', root).forEach(img => img.addEventListener('error', () => {
+      if (img.src.indexOf(img.dataset.fullSrc) === -1) img.src = img.dataset.fullSrc;
+    }, { once: true }));
     $$('.post-card', root).forEach(card => {
-      const open = () => openViewer(card.dataset.postId);
+      const open = () => openViewer(card.dataset.postId, card);
       card.addEventListener('click', open);
       card.addEventListener('keydown', event => {
         if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(); }
@@ -142,7 +171,7 @@
     if (!$('#post-grid')) return;
     const params = new URLSearchParams(window.location.search);
     state.collection = params.get('collection') || '';
-    setOptions('#filter-language', [...new Set(POSTS.map(lang))].sort((a, b) => a.localeCompare(b)), 'All languages');
+    setOptions('#filter-language', [...new Set(POSTS.map(lang))].filter(value => value !== HIDDEN_LANGUAGE).sort((a, b) => a.localeCompare(b)), 'All languages');
     setOptions('#filter-type', [...new Set(POSTS.map(form))].sort((a, b) => a.localeCompare(b)), 'All forms');
     setOptions('#filter-theme', [...new Set(POSTS.flatMap(themes))].sort((a, b) => a.localeCompare(b)), 'All themes');
 
@@ -194,7 +223,7 @@
     if (state.format && post.format !== state.format) return false;
     if (state.collection && !postCollections(post).includes(state.collection)) return false;
     if (state.q) {
-      const haystack = [post.caption, post.summary, post.id, lang(post), form(post), ...themes(post), ...postCollections(post)].join(' ').toLowerCase();
+      const haystack = [post.caption, post.summary, post.id, pieceNumber(post), lang(post), form(post), ...themes(post), ...postCollections(post)].join(' ').toLowerCase();
       if (!haystack.includes(state.q)) return false;
     }
     return true;
@@ -230,13 +259,21 @@
     wirePostCards('#post-grid');
   }
 
-  function openViewer(id) {
+  const PIECE_HASH = /^#piece-(\d+)$/;
+  let returnFocus = null;
+  let pushedHistory = false;
+
+  function openViewer(id, trigger = null, { updateUrl = true } = {}) {
     const post = POSTS.find(item => String(item.id) === String(id));
     if (!post) return;
+    if (!state.active) returnFocus = trigger || document.activeElement;
     state.active = post; state.slide = 0; updateViewer();
     const viewer = $('#viewer');
     viewer.hidden = false;
     document.body.classList.add('body-no-scroll');
+    if (updateUrl && window.location.hash !== `#piece-${post.id}`) {
+      try { history.pushState({ piece: post.id }, '', `#piece-${post.id}`); pushedHistory = true; } catch (_) {}
+    }
     $('.viewer-close')?.focus();
   }
 
@@ -245,9 +282,9 @@
     if (!post) return;
     const media = post.media || [];
     const item = media[state.slide] || media[0];
-    $('#viewer-number').textContent = `PIECE ${String(post.post_number).padStart(3, '0')}`;
+    $('#viewer-number').textContent = pieceLabel(post);
     $('#viewer-image').src = item?.src || '';
-    $('#viewer-image').alt = `Original artwork, piece ${post.post_number}, slide ${state.slide + 1} of ${media.length}`;
+    $('#viewer-image').alt = `Original artwork, piece ${pieceNumber(post)}, slide ${state.slide + 1} of ${media.length}`;
     $('#slide-counter').textContent = media.length > 1 ? `${String(state.slide + 1).padStart(2, '0')} / ${String(media.length).padStart(2, '0')}` : '';
     $('#slide-prev').disabled = state.slide <= 0;
     $('#slide-next').disabled = state.slide >= media.length - 1;
@@ -256,19 +293,63 @@
     $('#viewer-format').textContent = post.format === 'carousel' ? `CAROUSEL · ${media.length} SLIDES` : 'SINGLE POST';
     $('#viewer-title').textContent = cardTitle(post);
     $('#viewer-date').textContent = dateLabel(post);
-    const tags = [...new Set([...(themes(post) || []), ...(lang(post) !== 'Needs review' ? [lang(post)] : []), form(post)])].slice(0, 3);
+    const tags = [...new Set([...(themes(post) || []), ...(lang(post) !== HIDDEN_LANGUAGE ? [lang(post)] : []), form(post)])].slice(0, 3);
     $('#viewer-tags').innerHTML = tags.map(tag => `<span class="post-tag">${esc(tag)}</span>`).join('');
-    const caption = decodeCaption(post.caption || '').replace(/(?:#[\w]+\s*)+/g, '').trim();
-    $('#viewer-caption').textContent = /^([.\s]|✍️)*$/.test(caption) ? '' : caption;
-    $('#viewer-caption').style.display = $('#viewer-caption').textContent ? 'block' : 'none';
-    $('#copy-title').textContent = 'Copy caption';
+    const caption = cleanCaption(post.caption || '');
+    $('#viewer-caption').textContent = caption;
+    $('#viewer-caption').style.display = caption ? 'block' : 'none';
+    const copyButton = $('#copy-title');
+    if (copyButton) { copyButton.textContent = 'Copy caption'; copyButton.style.display = caption ? '' : 'none'; }
+    const linkButton = $('#copy-link');
+    if (linkButton) linkButton.textContent = 'Copy link';
+    $$('.viewer-actions [data-instagram-link]').forEach(link => {
+      link.href = post.source_url || configInstagram.url || 'https://www.instagram.com/electricfieldon/';
+    });
   }
 
-  function closeViewer() {
+  function hideViewer() {
     const viewer = $('#viewer');
     if (viewer) viewer.hidden = true;
     document.body.classList.remove('body-no-scroll');
     state.active = null;
+    if (returnFocus && document.contains(returnFocus)) returnFocus.focus();
+    returnFocus = null;
+  }
+
+  function closeViewer() {
+    if (!state.active) return;
+    if (PIECE_HASH.test(window.location.hash)) {
+      if (pushedHistory) { pushedHistory = false; history.back(); return; } // popstate hides it
+      try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (_) {}
+    }
+    hideViewer();
+  }
+
+  function syncViewerWithUrl() {
+    const match = window.location.hash.match(PIECE_HASH);
+    if (match) {
+      if (!state.active || String(state.active.id) !== match[1]) openViewer(match[1], null, { updateUrl: false });
+    } else if (state.active) {
+      pushedHistory = false;
+      hideViewer();
+    }
+  }
+
+  function linkForActive() {
+    if (!state.active) return window.location.href;
+    return `${window.location.origin}${window.location.pathname}#piece-${state.active.id}`;
+  }
+
+  async function copyText(value, button, label) {
+    try {
+      await navigator.clipboard.writeText(value);
+      button.textContent = 'Copied';
+    } catch (error) {
+      const area = document.createElement('textarea'); area.value = value; document.body.appendChild(area); area.select();
+      try { document.execCommand('copy'); button.textContent = 'Copied'; } catch (_) {}
+      area.remove();
+    }
+    window.setTimeout(() => { if ($('#viewer') && !$('#viewer').hidden) button.textContent = label; }, 1500);
   }
   function nextSlide(direction) {
     if (!state.active) return;
@@ -282,23 +363,29 @@
     $('#slide-next')?.addEventListener('click', () => nextSlide(1));
     $$('[data-close-viewer]').forEach(button => button.addEventListener('click', closeViewer));
     document.addEventListener('keydown', event => {
-      if (!$('#viewer') || $('#viewer').hidden) return;
+      const viewer = $('#viewer');
+      if (!viewer || viewer.hidden) return;
       if (event.key === 'Escape') closeViewer();
       if (event.key === 'ArrowLeft') nextSlide(-1);
       if (event.key === 'ArrowRight') nextSlide(1);
-    });
-    $('#copy-title')?.addEventListener('click', async () => {
-      const value = state.active?.caption || '';
-      try {
-        await navigator.clipboard.writeText(value);
-        $('#copy-title').textContent = 'Copied';
-      } catch (error) {
-        const area = document.createElement('textarea'); area.value = value; document.body.appendChild(area); area.select();
-        try { document.execCommand('copy'); $('#copy-title').textContent = 'Copied'; } catch (_) {}
-        area.remove();
+      if (event.key === 'Tab') {
+        // Keep keyboard focus inside the open viewer.
+        const focusable = $$('button:not([disabled]):not([hidden]), a[href]', $('.viewer-panel', viewer))
+          .filter(el => el.offsetParent !== null && getComputedStyle(el).visibility !== 'hidden');
+        if (!focusable.length) return;
+        const first = focusable[0], last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !viewer.contains(document.activeElement))) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && (document.activeElement === last || !viewer.contains(document.activeElement))) { event.preventDefault(); first.focus(); }
       }
-      window.setTimeout(() => { if ($('#viewer') && !$('#viewer').hidden) $('#copy-title').textContent = 'Copy caption'; }, 1500);
     });
+    $('#copy-title')?.addEventListener('click', () => {
+      copyText(cleanCaption(state.active?.caption || ''), $('#copy-title'), 'Copy caption');
+    });
+    $('#copy-link')?.addEventListener('click', () => {
+      copyText(linkForActive(), $('#copy-link'), 'Copy link');
+    });
+    window.addEventListener('popstate', syncViewerWithUrl);
+    window.addEventListener('hashchange', syncViewerWithUrl);
     let touchX = null;
     $('#viewer-image')?.addEventListener('touchstart', event => { touchX = event.changedTouches[0]?.screenX ?? null; }, { passive: true });
     $('#viewer-image')?.addEventListener('touchend', event => {
@@ -310,6 +397,10 @@
   }
 
   applySiteConfig();
+  $('.menu-toggle')?.addEventListener('click', () => {
+    const open = $('#main-nav')?.classList.toggle('is-open') || false;
+    $('.menu-toggle').setAttribute('aria-expanded', String(open));
+  });
   initMobileNavigation();
   initViewer();
   if (page === 'home') {
@@ -320,4 +411,5 @@
     initFilters();
     renderArchive();
   }
+  syncViewerWithUrl();
 })();

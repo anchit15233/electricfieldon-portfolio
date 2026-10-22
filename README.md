@@ -20,7 +20,7 @@ Edit `site-config.js`:
 - `featuredPostIds` controls which posts appear in Featured and their order.
 - `collections` controls the mood cards shown on the homepage. Collection names should match the collection names in `data.js` post tags.
 
-To choose a featured post, use its `id` from `data/posts.json` (or `data.js`) and add it to `featuredPostIds`. The post artwork is never rewritten by the featured selection.
+To choose a featured post, use its `id` from `data.js` (or `posts.json`) and add it to `featuredPostIds`. The post artwork is never rewritten by the featured selection.
 
 ## Files
 
@@ -30,9 +30,22 @@ To choose a featured post, use its `id` from `data/posts.json` (or `data.js`) an
 - `app.js` — rendering, filters, collection browsing and carousel viewer
 - `site-config.js` — simple customisation settings
 - `data.js` — post metadata used by the static website
-- `data/posts.json` and `data/posts.csv` — inventory/manifests
-- `assets/media/` — original-image-derived display media; these files are not edited by the UI
+- `posts.json`, `posts.csv`, `asset-integrity.json` — inventory/manifests (not used by the site; blocked from the live site in `netlify.toml`)
+- `assets/media/` — original artwork, shown untouched in the viewer
+- `assets/thumbs/` — smaller copies of each post's first image, used only on grid cards
+- `tools/make-thumbs.py` — regenerates thumbnails
+- `404.html` — not-found page
 - `netlify.toml` — static Netlify configuration
+
+## Adding new posts
+
+1. Update `data.js` (and copy the new images into `assets/media/`).
+2. Regenerate thumbnails: `pip install pillow && python3 tools/make-thumbs.py`. If a thumbnail is missing, the card falls back to the original image, so nothing breaks, it's just heavier.
+3. Piece numbers are computed from post dates (oldest = 001), so existing numbers never change.
+
+## Linking to a single piece
+
+Each opened piece gets a shareable URL such as `archive.html#piece-18131672362827668`. The viewer's **Copy link** button copies it. If a post has a `source_url` in `data.js`, "Visit Instagram" opens that post instead of the profile.
 
 ## Deploy to Netlify
 

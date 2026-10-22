@@ -1,2 +1,45 @@
 [build]
   publish = "."
+
+# The repository root is published, so keep internal files off the live site.
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/posts.csv"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/posts.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/asset-integrity.json"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Thumbnails and originals never change under the same name, so let browsers cache them.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
