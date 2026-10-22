@@ -2,10 +2,18 @@
 
 A static, mobile-friendly writing portfolio made from an Instagram export. The site uses plain HTML, CSS and JavaScript; no package installation or build command is required.
 
-## Pages
+## How the site is laid out
 
-- `index.html` — the focused homepage: Featured Posts and Browse by Mood.
-- `archive.html` — separate complete archive with search and optional filters.
+The site is a book.
+
+- `index.html` opens on a cloth-bound **cover**. Tapping it opens the book to the **Contents**: the left page has a frontispiece picture and a short "Begin here" list (your featured posts), and the right page lists the **chapters**. Each chapter is one mood from `site-config.js`.
+- A chapter (`index.html#chapter-quiet-thoughts`) shows its pieces as plates, newest first, with the page number under each.
+- `archive.html` is the **Index**: every piece grouped by month, with search, chapter chips, and language, form and order filters. Old `archive.html?collection=…` links still work.
+- Opening any piece shows it as an open book: artwork on the left, caption on the right. Arrow keys or swiping go through the images and then on to the next piece in the same chapter.
+
+Page numbers come from post dates (oldest is p. 1), so adding posts never renumbers older ones. The cover is skipped for the rest of a visit once opened, and whenever someone arrives by a direct link.
+
+To give a piece a proper title instead of one taken from its caption, add `"title": "..."` to that post in `data.js`.
 
 ## Run locally
 
@@ -15,19 +23,19 @@ Open `index.html` in a modern browser. Open `archive.html` to view the complete 
 
 Edit `site-config.js`:
 
-- `navigation` controls navigation labels and their destinations.
 - `instagram` controls the external profile link label and URL.
-- `featuredPostIds` controls which posts appear in Featured and their order.
-- `collections` controls the mood cards shown on the homepage. Collection names should match the collection names in `data.js` post tags.
+- `featuredPostIds` controls the "Begin here" list and its order. The first one is the frontispiece.
+- `collections` are the chapters, in book order. Names must match the collection names in `data.js` post tags.
+- `coverLine` is the line printed on the cover.
 
 To choose a featured post, use its `id` from `data.js` (or `posts.json`) and add it to `featuredPostIds`. The post artwork is never rewritten by the featured selection.
 
 ## Files
 
-- `index.html` — homepage
-- `archive.html` — complete writing archive
+- `index.html` — cover, contents and chapters
+- `archive.html` — the index of all pieces
 - `styles.css` — visual styling and responsive layout
-- `app.js` — rendering, filters, collection browsing and carousel viewer
+- `app.js` — the cover, contents, chapters, index and reader
 - `site-config.js` — simple customisation settings
 - `data.js` — post metadata used by the static website
 - `posts.json`, `posts.csv`, `asset-integrity.json` — inventory/manifests (not used by the site; blocked from the live site in `netlify.toml`)

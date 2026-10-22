@@ -3,68 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f0e9">
-  <meta name="description" content="Explore the complete electricfieldon writing archive.">
-  <title>All writing — electricfieldon</title>
+  <meta name="theme-color" content="#241e19">
+  <meta name="description" content="The index of every electricfieldon piece: search for a line, or browse by chapter, language and form.">
+  <title>Index — electricfieldon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&family=Tiro+Devanagari+Hindi&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script defer src="site-config.js"></script>
   <script defer src="data.js"></script>
   <script defer src="app.js"></script>
 </head>
-<body data-page="archive">
-  <div class="paper-grain" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="wordmark" data-site-home href="index.html" aria-label="electricfieldon home"><span data-site-name>electricfieldon</span><b>.</b><small data-site-subtitle>A WRITING ARCHIVE</small></a>
-    <nav class="main-nav" id="main-nav" aria-label="Main navigation"></nav>
-    <a class="instagram-link" data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+<body data-page="index">
+  <a class="skip" href="#main">Skip to the index</a>
+  <header class="bookbar">
+    <a class="mark" href="index.html#contents" data-site-name>electricfieldon</a>
+    <nav class="bookbar-nav" aria-label="Book">
+      <a href="index.html#contents" data-nav="contents">Contents</a>
+      <a href="archive.html" data-nav="index" aria-current="page">Index</a>
+      <a href="https://www.instagram.com/electricfieldon/" data-instagram-link class="bookbar-ig">Instagram</a>
+    </nav>
   </header>
 
-  <main id="top">
-    <section class="archive-hero wrap">
-      <a class="back-link" href="index.html">← Back to the portfolio</a>
-      <div class="eyebrow"><span class="eyebrow-line"></span> EVERY PIECE, IN ONE PLACE</div>
-      <h1>All the <em>writing.</em></h1>
-      <p>Search for a line, browse a language, or wander through the complete archive. Every image remains in its original form.</p>
-    </section>
+  <main id="main" class="book">
+    <div class="page page-single index-page">
+      <p class="page-head" data-site-name>electricfieldon</p>
+      <h1 class="index-title">Index</h1>
+      <p class="index-intro">Every piece in the book. Search for a line you remember, or narrow it down.</p>
 
-    <section id="archive" class="archive-section wrap" aria-labelledby="archive-title">
-      <div class="archive-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> THE COMPLETE COLLECTION</div><h2 id="archive-title">The <em>archive.</em></h2></div>
-        <div class="archive-count" id="results-count">Loading writing…</div>
-      </div>
-      <div class="archive-context" id="archive-context" hidden><span id="archive-context-label"></span><button type="button" id="clear-collection">Clear mood ×</button></div>
-      <div class="filter-panel">
-        <div class="archive-tools">
-          <label class="search-box"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search the archive…" autocomplete="off"></label>
-          <button id="filters-toggle" class="filter-toggle" type="button" aria-expanded="false" aria-controls="archive-filters">Filters <span aria-hidden="true">＋</span></button>
-        </div>
-        <div class="filter-row" id="archive-filters">
-          <label class="select-label"><span>LANGUAGE</span><select id="filter-language"><option value="">All languages</option></select></label>
-          <label class="select-label"><span>FORM</span><select id="filter-type"><option value="">All forms</option></select></label>
-          <label class="select-label"><span>THEME</span><select id="filter-theme"><option value="">All themes</option></select></label>
-          <label class="select-label"><span>FORMAT</span><select id="filter-format"><option value="">All formats</option><option value="single">Single post</option><option value="carousel">Carousel</option></select></label>
-          <label class="select-label sort-label"><span>SORT</span><select id="sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label>
-          <button id="clear-filters" class="clear-filters" type="button">Clear all ×</button>
+      <div class="index-tools">
+        <label class="search"><span class="vh">Search the index</span><input id="search" type="search" placeholder="Search for a line, a word, a page…" autocomplete="off"></label>
+        <div class="chips" id="chapter-chips" role="group" aria-label="Chapter"></div>
+        <div class="index-filters">
+          <label><span>Language</span><select id="filter-language"><option value="">Any</option></select></label>
+          <label><span>Form</span><select id="filter-type"><option value="">Any</option></select></label>
+          <label><span>Pages</span><select id="filter-format"><option value="">Any</option><option value="single">Single page</option><option value="carousel">Several pages</option></select></label>
+          <label><span>Order</span><select id="sort"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select></label>
+          <button class="link-button" id="clear-filters" type="button">Clear</button>
         </div>
       </div>
-      <div class="post-grid" id="post-grid" aria-live="polite"></div>
-      <div class="empty-state" id="empty-state" hidden><span>✳</span><h3>No words found here.</h3><p>Try a different search or clear the filters.</p><button class="button button-outline" id="empty-clear" type="button">Clear filters</button></div>
-      <div class="archive-bottom"><span class="archive-bottom-mark">✳</span><p>Every piece has its own shape.<br><em>Every reader finds a different line.</em></p><span class="archive-bottom-mark">✳</span></div>
-    </section>
-  </main>
 
-  <footer class="site-footer wrap"><a class="footer-wordmark" data-site-home href="index.html"><span data-site-name>electricfieldon</span><b>.</b></a><span data-footer-tagline>A small library for words that stay.</span><a data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Instagram ↗</a></footer>
-
-  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
-    <button class="viewer-backdrop" data-close-viewer aria-label="Close viewer"></button>
-    <div class="viewer-panel">
-      <div class="viewer-top"><span class="viewer-kicker">THE ARCHIVE · <span id="viewer-number"></span></span><button class="viewer-close" type="button" data-close-viewer aria-label="Close">×</button></div>
-      <div class="viewer-body">
-        <div class="viewer-artwork"><button class="slide-arrow slide-prev" id="slide-prev" type="button" aria-label="Previous slide">‹</button><img id="viewer-image" alt="Original writing post slide"><button class="slide-arrow slide-next" id="slide-next" type="button" aria-label="Next slide">›</button><div class="slide-counter" id="slide-counter"></div></div>
-        <aside class="viewer-details"><div class="eyebrow"><span class="eyebrow-line"></span> <span id="viewer-format">WRITING</span></div><h2 id="viewer-title">A piece of writing</h2><p class="viewer-date" id="viewer-date"></p><div class="viewer-tags" id="viewer-tags"></div><div class="viewer-caption" id="viewer-caption"></div><div class="viewer-actions"><a class="button button-dark" data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Visit Instagram ↗</a><button class="button button-outline" id="copy-title" type="button">Copy caption</button><button class="button button-outline" id="copy-link" type="button">Copy link</button></div><p class="viewer-note">Artwork is displayed without cropping or restyling. Use the arrows to move through carousel slides.</p></aside>
+      <p class="index-count" id="results-count" aria-live="polite"></p>
+      <div class="index-list" id="index-list"></div>
+      <div class="empty-state" id="empty-state" hidden>
+        <p>Nothing in the index matches that.</p>
+        <button class="link-button" id="empty-clear" type="button">Clear the search and filters</button>
       </div>
     </div>
+  </main>
+
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" hidden>
+    <button class="reader-backdrop" type="button" data-close-reader tabindex="-1" aria-label="Close"></button>
+    <article class="reader-book">
+      <div class="reader-page reader-art">
+        <button class="reader-x" type="button" data-close-reader aria-label="Close">×</button>
+        <img id="reader-image" alt="">
+        <button class="slide-btn slide-prev" id="slide-prev" type="button" aria-label="Previous image">‹</button>
+        <button class="slide-btn slide-next" id="slide-next" type="button" aria-label="Next image">›</button>
+        <span class="slide-count" id="slide-count"></span>
+      </div>
+      <div class="reader-page reader-text">
+        <div class="reader-top"><span id="reader-context"></span><button class="reader-close" type="button" data-close-reader>Close</button></div>
+        <p class="reader-folio" id="reader-folio"></p>
+        <h2 id="reader-title"></h2>
+        <p class="reader-date" id="reader-date"></p>
+        <div class="reader-caption" id="reader-caption"></div>
+        <p class="reader-tags" id="reader-tags"></p>
+        <div class="reader-actions">
+          <button class="text-button" id="copy-caption" type="button">Copy caption</button>
+          <button class="text-button" id="copy-link" type="button">Copy link</button>
+          <a class="text-button" id="reader-instagram" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">View on Instagram</a>
+        </div>
+        <nav class="reader-turn" aria-label="Turn the page">
+          <button class="turn-button" id="prev-piece" type="button">‹ Previous page</button>
+          <span class="reader-pos" id="reader-pos"></span>
+          <button class="turn-button" id="next-piece" type="button">Next page ›</button>
+        </nav>
+      </div>
+    </article>
   </div>
 </body>
 </html>

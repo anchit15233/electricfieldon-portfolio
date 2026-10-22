@@ -3,68 +3,112 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f0e9">
-  <meta name="description" content="A curated writing portfolio for electricfieldon — poems, shayari, reflections and fragments beyond the feed.">
-  <title>electricfieldon — a writing archive</title>
+  <meta name="theme-color" content="#241e19">
+  <meta name="description" content="electricfieldon: poems, shayari and small fragments of feeling, bound together as a book you can browse by mood.">
+  <title>electricfieldon — a book of writing</title>
+  <script>
+    /* Skip the cover when arriving by a direct link, or when the book was already opened this visit. */
+    try { if (location.hash || sessionStorage.getItem('ef-book-open')) document.documentElement.classList.add('book-open'); } catch (_) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IM+Fell+English:ital@0;1&family=Tiro+Devanagari+Hindi&display=swap">
   <link rel="stylesheet" href="styles.css">
   <script defer src="site-config.js"></script>
   <script defer src="data.js"></script>
   <script defer src="app.js"></script>
 </head>
-<body data-page="home">
-  <div class="paper-grain" aria-hidden="true"></div>
-  <header class="site-header">
-    <a class="wordmark" data-site-home href="index.html" aria-label="electricfieldon home"><span data-site-name>electricfieldon</span><b>.</b><small data-site-subtitle>A WRITING ARCHIVE</small></a>
-    <nav class="main-nav" id="main-nav" aria-label="Main navigation"></nav>
-    <a class="instagram-link" data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Instagram <span aria-hidden="true">↗</span></a>
-    <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false">☰</button>
+<body data-page="book">
+  <a class="skip" href="#main">Skip to contents</a>
+
+  <section class="cover" id="cover" aria-label="Book cover">
+    <button class="cover-board" id="cover-board" type="button" aria-label="Open the book">
+      <span class="cover-frame">
+        <span class="cover-kicker">a book of writing</span>
+        <span class="cover-title" data-site-name>electricfieldon</span>
+        <svg class="ornament cover-ornament" viewBox="0 0 120 12" aria-hidden="true"><path d="M0 6h50M70 6h50" stroke="currentColor" stroke-width="1"/><path d="M60 1l5 5-5 5-5-5z" fill="currentColor"/></svg>
+        <span class="cover-line" data-cover-line>Poems, shayari and small fragments of feeling, kept beyond the feed</span>
+        <span class="cover-count"><span data-total>162</span> pieces in <span data-chapter-count>five</span> chapters</span>
+      </span>
+    </button>
+    <p class="cover-hint">Tap the cover to open</p>
+  </section>
+
+  <header class="bookbar">
+    <a class="mark" href="#contents" data-site-name>electricfieldon</a>
+    <nav class="bookbar-nav" aria-label="Book">
+      <a href="#contents" data-nav="contents">Contents</a>
+      <a href="archive.html" data-nav="index">Index</a>
+      <a href="https://www.instagram.com/electricfieldon/" data-instagram-link class="bookbar-ig">Instagram</a>
+    </nav>
   </header>
 
-  <main id="top">
-    <section class="hero hero-simple wrap" aria-labelledby="hero-title">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="eyebrow-line"></span> NOTES FROM THE FEED, KEPT TOGETHER</div>
-        <h1 id="hero-title">A place for<br><em>words to stay.</em></h1>
-        <p class="hero-intro">Poems, shayari, reflections, and little fragments of feeling — gathered beyond the endless scroll.</p>
-        <div class="hero-actions">
-          <a class="button button-dark" href="#featured">Start with featured work <span aria-hidden="true">↓</span></a>
-          <a class="quiet-link" href="#collections">Browse by mood ↘</a>
+  <main id="main" class="book">
+    <section class="view" id="view-contents" aria-labelledby="contents-title">
+      <div class="spread">
+        <div class="page page-left">
+          <p class="page-head">Frontispiece</p>
+          <figure class="frontis" id="frontis"></figure>
+          <h2 class="small-head">Begin here</h2>
+          <ol class="begin-list" id="begin-list"></ol>
+          <span class="folio">i</span>
         </div>
-        <div class="hero-footnote"><span class="tiny-star">✳</span> ORIGINAL ARTWORK · A MORE ORDERED WAY TO READ</div>
+        <div class="page page-right">
+          <p class="page-head" data-site-name>electricfieldon</p>
+          <h1 class="contents-title" id="contents-title" tabindex="-1">Contents</h1>
+          <p class="contents-note">Each chapter gathers the pieces written around one feeling. Choose the one that matches yours.</p>
+          <svg class="ornament" viewBox="0 0 120 12" aria-hidden="true"><path d="M0 6h50M70 6h50" stroke="currentColor" stroke-width="1"/><path d="M60 1l5 5-5 5-5-5z" fill="currentColor"/></svg>
+          <ol class="toc" id="toc"></ol>
+          <a class="toc-entry toc-index" href="archive.html">
+            <span class="toc-num">¶</span>
+            <span class="toc-line"><span class="toc-title">Index of all pieces</span><span class="leader" aria-hidden="true"></span><span class="toc-count" data-total>162</span></span>
+            <span class="toc-sub">Search for a line, or look by language and form</span>
+          </a>
+          <p class="colophon">Also kept on <a data-instagram-link href="https://www.instagram.com/electricfieldon/">Instagram</a>. <button type="button" class="link-button" data-close-book>Close the book</button></p>
+          <span class="folio">ii</span>
+        </div>
       </div>
-      <div class="hero-aside" aria-hidden="true"><span class="hero-aside-number">01 / ∞</span><span class="hero-aside-rule"></span><span class="hero-aside-quote">“Some feelings find<br>their way into words.”</span><span class="hero-aside-mark">e.</span></div>
     </section>
 
-    <section id="featured" class="featured-section wrap" aria-labelledby="featured-title">
-      <div class="section-heading featured-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> A FEW PIECES TO BEGIN WITH</div><h2 id="featured-title">Featured <em>work.</em></h2></div>
-        <p>A small, handpicked selection. The artwork stays as it was originally posted; choose a piece to read it or swipe through its carousel.</p>
+    <section class="view" id="view-chapter" aria-labelledby="chapter-title" hidden>
+      <div class="page page-single chapter-page">
+        <nav class="chapter-nav" id="chapter-nav" aria-label="Chapters"></nav>
+        <header class="chapter-opener" id="chapter-opener"></header>
+        <div class="plates" id="plates"></div>
+        <nav class="chapter-foot" id="chapter-foot" aria-label="Next chapter"></nav>
       </div>
-      <div class="featured-grid" id="featured-grid" aria-label="Featured writing"></div>
-      <div class="featured-more"><a class="quiet-link" href="archive.html">Explore all writing ↗</a></div>
-    </section>
-
-    <section id="collections" class="collections-section wrap" aria-labelledby="collections-title">
-      <div class="section-heading">
-        <div><div class="eyebrow"><span class="eyebrow-line"></span> FOLLOW A FEELING</div><h2 id="collections-title">Browse by <em>mood.</em></h2></div>
-        <p>Start with a feeling; discover poems, shayari and small reflections gathered around it.</p>
-      </div>
-      <div class="collection-grid" id="collection-grid"></div>
-      <div class="home-archive-link"><span>Looking for something specific?</span><a class="quiet-link" href="archive.html">Explore the complete archive ↗</a></div>
     </section>
   </main>
 
-  <footer class="site-footer wrap"><a class="footer-wordmark" data-site-home href="index.html"><span data-site-name>electricfieldon</span><b>.</b></a><span data-footer-tagline>A small library for words that stay.</span><a data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Instagram ↗</a></footer>
-
-  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
-    <button class="viewer-backdrop" data-close-viewer aria-label="Close viewer"></button>
-    <div class="viewer-panel">
-      <div class="viewer-top"><span class="viewer-kicker">THE ARCHIVE · <span id="viewer-number"></span></span><button class="viewer-close" type="button" data-close-viewer aria-label="Close">×</button></div>
-      <div class="viewer-body">
-        <div class="viewer-artwork"><button class="slide-arrow slide-prev" id="slide-prev" type="button" aria-label="Previous slide">‹</button><img id="viewer-image" alt="Original writing post slide"><button class="slide-arrow slide-next" id="slide-next" type="button" aria-label="Next slide">›</button><div class="slide-counter" id="slide-counter"></div></div>
-        <aside class="viewer-details"><div class="eyebrow"><span class="eyebrow-line"></span> <span id="viewer-format">WRITING</span></div><h2 id="viewer-title">A piece of writing</h2><p class="viewer-date" id="viewer-date"></p><div class="viewer-tags" id="viewer-tags"></div><div class="viewer-caption" id="viewer-caption"></div><div class="viewer-actions"><a class="button button-dark" data-instagram-link href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">Visit Instagram ↗</a><button class="button button-outline" id="copy-title" type="button">Copy caption</button><button class="button button-outline" id="copy-link" type="button">Copy link</button></div><p class="viewer-note">Artwork is displayed without cropping or restyling. Use the arrows to move through carousel slides.</p></aside>
+  <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="reader-title" hidden>
+    <button class="reader-backdrop" type="button" data-close-reader tabindex="-1" aria-label="Close"></button>
+    <article class="reader-book">
+      <div class="reader-page reader-art">
+        <button class="reader-x" type="button" data-close-reader aria-label="Close">×</button>
+        <img id="reader-image" alt="">
+        <button class="slide-btn slide-prev" id="slide-prev" type="button" aria-label="Previous image">‹</button>
+        <button class="slide-btn slide-next" id="slide-next" type="button" aria-label="Next image">›</button>
+        <span class="slide-count" id="slide-count"></span>
       </div>
-    </div>
+      <div class="reader-page reader-text">
+        <div class="reader-top"><span id="reader-context"></span><button class="reader-close" type="button" data-close-reader>Close</button></div>
+        <p class="reader-folio" id="reader-folio"></p>
+        <h2 id="reader-title"></h2>
+        <p class="reader-date" id="reader-date"></p>
+        <div class="reader-caption" id="reader-caption"></div>
+        <p class="reader-tags" id="reader-tags"></p>
+        <div class="reader-actions">
+          <button class="text-button" id="copy-caption" type="button">Copy caption</button>
+          <button class="text-button" id="copy-link" type="button">Copy link</button>
+          <a class="text-button" id="reader-instagram" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">View on Instagram</a>
+        </div>
+        <nav class="reader-turn" aria-label="Turn the page">
+          <button class="turn-button" id="prev-piece" type="button">‹ Previous page</button>
+          <span class="reader-pos" id="reader-pos"></span>
+          <button class="turn-button" id="next-piece" type="button">Next page ›</button>
+        </nav>
+      </div>
+    </article>
   </div>
 </body>
 </html>

@@ -2,13 +2,16 @@
   electricfieldon site settings
   Safe, small customisations live here so they don't require edits to app.js.
 
-  To change which posts appear under Featured, replace/add post IDs in featuredPostIds.
+  featuredPostIds: the "Begin here" list on the contents page. The first one is the frontispiece picture.
+  collections: the chapters, in book order. Names must match the collection names in data.js.
   To change navigation labels or destinations, edit the navigation entries below.
   Keep hrefs relative to this folder (for example: "archive.html").
 */
 window.PORTFOLIO_CONFIG = {
   siteName: 'electricfieldon',
   siteSubtitle: 'A WRITING ARCHIVE',
+  // The line printed on the book cover.
+  coverLine: 'Poems, shayari and small fragments of feeling, kept beyond the feed',
   instagram: {
     label: 'Instagram',
     url: 'https://www.instagram.com/electricfieldon/'
