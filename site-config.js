@@ -2,7 +2,7 @@
   electricfieldon site settings
   Safe, small customisations live here so they don't require edits to app.js.
 
-  featuredPostIds: the "Begin here" list on the contents page. The first one is the frontispiece picture.
+  featuredPostIds: no longer shown on the contents page; kept for a possible future "featured" spot.
   collections: the chapters, in book order. Names must match the collection names in data.js.
   To change navigation labels or destinations, edit the navigation entries below.
   Keep hrefs relative to this folder (for example: "archive.html").
@@ -32,7 +32,6 @@ window.PORTFOLIO_CONFIG = {
     { name: 'Fragments of Love', sub: 'Love, longing & the unsaid', symbol: '♡', kicker: '01' },
     { name: 'Quiet Thoughts', sub: 'Life, self & the world', symbol: '✳', kicker: '02' },
     { name: 'Hindi & Shayari', sub: 'Words in Hindi and Urdu', symbol: 'अ', kicker: '03' },
-    { name: 'Finding Light', sub: 'Healing, hope & beginning again', symbol: '✳', kicker: '04' },
-    { name: 'After Hours', sub: 'The darker, softer corners', symbol: '☾', kicker: '05' }
+    { name: 'After Hours', sub: 'The darker, softer corners', symbol: '☾', kicker: '04' }
   ]
 };

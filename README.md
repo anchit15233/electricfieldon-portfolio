@@ -6,7 +6,7 @@ A static, mobile-friendly writing portfolio made from an Instagram export. The s
 
 The site is a book.
 
-- `index.html` opens on a cloth-bound **cover**. Tapping it opens the book to the **Contents**: the left page has a frontispiece picture and a short "Begin here" list (your featured posts), and the right page lists the **chapters**. Each chapter is one mood from `site-config.js`.
+- `index.html` opens on an ink-blue cloth **cover** with the emblem set into it and a red ribbon bookmark. Tapping it opens the book to the **Contents**: the left page holds the author portrait (`assets/brand/electricfieldon-logo.jpg`) with the Instagram handle, and the right page lists the Index first, then the **chapters**. Each chapter is one mood from `site-config.js`.
 - A chapter (`index.html#chapter-quiet-thoughts`) shows its pieces as plates, newest first, with the page number under each.
 - `archive.html` is the **Index**: every piece grouped by month, with search, chapter chips, and language, form and order filters. Old `archive.html?collection=…` links still work.
 - Opening any piece shows it as an open book: artwork on the left, caption on the right. Arrow keys or swiping go through the images and then on to the next piece in the same chapter.
@@ -24,9 +24,10 @@ Open `index.html` in a modern browser. Open `archive.html` to view the complete 
 Edit `site-config.js`:
 
 - `instagram` controls the external profile link label and URL.
-- `featuredPostIds` controls the "Begin here" list and its order. The first one is the frontispiece.
+- `featuredPostIds` is not shown on the site right now; it's kept in case a featured spot comes back.
 - `collections` are the chapters, in book order. Names must match the collection names in `data.js` post tags.
-- `coverLine` is the line printed on the cover.
+- `coverLine` is the line printed on the cover. The "Volume I, since …" year comes from the oldest post.
+- To change the emblem or portrait, replace `assets/brand/electricfieldon-logo.jpg` (square image, dark background).
 
 To choose a featured post, use its `id` from `data.js` (or `posts.json`) and add it to `featuredPostIds`. The post artwork is never rewritten by the featured selection.
 

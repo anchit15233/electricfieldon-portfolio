@@ -26,10 +26,11 @@
       <span class="cover-frame">
         <span class="cover-kicker">a book of writing</span>
         <span class="cover-title" data-site-name>electricfieldon</span>
-        <svg class="ornament cover-ornament" viewBox="0 0 120 12" aria-hidden="true"><path d="M0 6h50M70 6h50" stroke="currentColor" stroke-width="1"/><path d="M60 1l5 5-5 5-5-5z" fill="currentColor"/></svg>
+        <span class="cover-medallion"><img src="assets/brand/electricfieldon-logo.jpg" alt="" width="417" height="417"></span>
         <span class="cover-line" data-cover-line>Poems, shayari and small fragments of feeling, kept beyond the feed</span>
-        <span class="cover-count"><span data-total>162</span> pieces in <span data-chapter-count>five</span> chapters</span>
+        <span class="cover-volume" data-volume>Volume I, since 2025</span>
       </span>
+      <span class="cover-ribbon" aria-hidden="true"></span>
     </button>
     <p class="cover-hint">Tap the cover to open</p>
   </section>
@@ -38,7 +39,6 @@
     <a class="mark" href="#contents" data-site-name>electricfieldon</a>
     <nav class="bookbar-nav" aria-label="Book">
       <a href="#contents" data-nav="contents">Contents</a>
-      <a href="archive.html" data-nav="index">Index</a>
       <a href="https://www.instagram.com/electricfieldon/" data-instagram-link class="bookbar-ig">Instagram</a>
     </nav>
   </header>
@@ -46,11 +46,14 @@
   <main id="main" class="book">
     <section class="view" id="view-contents" aria-labelledby="contents-title">
       <div class="spread">
-        <div class="page page-left">
-          <p class="page-head">Frontispiece</p>
-          <figure class="frontis" id="frontis"></figure>
-          <h2 class="small-head">Begin here</h2>
-          <ol class="begin-list" id="begin-list"></ol>
+        <div class="page page-left portrait-page">
+          <figure class="portrait">
+            <span class="portrait-plate"><span class="portrait-oval"><img src="assets/brand/electricfieldon-logo.jpg" alt="The electricfieldon emblem: a fountain pen wrapped in a ribbon of blue ink" width="417" height="417"></span></span>
+            <figcaption>
+              <a class="portrait-handle" data-instagram-link href="https://www.instagram.com/electricfieldon/">@electricfieldon</a>
+              <span class="portrait-line">The hand behind these pages</span>
+            </figcaption>
+          </figure>
           <span class="folio">i</span>
         </div>
         <div class="page page-right">
@@ -58,13 +61,12 @@
           <h1 class="contents-title" id="contents-title" tabindex="-1">Contents</h1>
           <p class="contents-note">Each chapter gathers the pieces written around one feeling. Choose the one that matches yours.</p>
           <svg class="ornament" viewBox="0 0 120 12" aria-hidden="true"><path d="M0 6h50M70 6h50" stroke="currentColor" stroke-width="1"/><path d="M60 1l5 5-5 5-5-5z" fill="currentColor"/></svg>
-          <ol class="toc" id="toc"></ol>
           <a class="toc-entry toc-index" href="archive.html">
             <span class="toc-num">¶</span>
             <span class="toc-line"><span class="toc-title">Index of all pieces</span><span class="leader" aria-hidden="true"></span><span class="toc-count" data-total>162</span></span>
             <span class="toc-sub">Search for a line, or look by language and form</span>
           </a>
-          <p class="colophon">Also kept on <a data-instagram-link href="https://www.instagram.com/electricfieldon/">Instagram</a>. <button type="button" class="link-button" data-close-book>Close the book</button></p>
+          <ol class="toc" id="toc"></ol>
           <span class="folio">ii</span>
         </div>
       </div>

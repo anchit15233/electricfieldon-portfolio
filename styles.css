@@ -5,8 +5,9 @@
 :root {
   --desk: #241e19;
   --desk-light: #3a3029;
-  --cloth: #26392f;
-  --cloth-deep: #1b2a22;
+  --cloth: #1c2a4f;            /* deep ink-blue, from the ink swirl in the emblem */
+  --cloth-deep: #121c37;
+  --ribbon: #7b1d26;
   --foil: #c9a961;
   --foil-light: #e4cd8e;
   --paper: #f2ede2;
@@ -17,7 +18,7 @@
   --ink-soft: #5f584c;
   --ink-faint: #857d6e;
   --rule: #cdc2ad;
-  --accent: #26392f;           /* the cloth green, carried onto the pages */
+  --accent: #24376e;           /* the cloth's ink-blue, carried onto the pages */
   --serif: "EB Garamond", "Tiro Devanagari Hindi", Garamond, "Times New Roman", serif;
   --display: "IM Fell English", "EB Garamond", "Tiro Devanagari Hindi", Georgia, serif;
   --book-w: 1140px;
@@ -69,7 +70,7 @@ button { font: inherit; color: inherit; }
 .cover-board {
   container-type: inline-size;
   position: relative;
-  width: min(440px, 84vw, 56vh);
+  width: min(430px, 80vw, 50vh);
   aspect-ratio: 2 / 3;
   padding: 0; border: 0; cursor: pointer;
   border-radius: 3px 9px 9px 3px;
@@ -96,7 +97,7 @@ button { font: inherit; color: inherit; }
 .cover-board:focus-visible { outline-offset: 8px; }
 .cover-frame {
   position: absolute; inset: 7% 7% 7% 13%;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5cqi;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5.5cqi;
   border: 1px solid currentColor;
   outline: 1px solid currentColor; outline-offset: -2.2cqi;
   text-align: center; padding: 8cqi 7cqi;
@@ -108,10 +109,21 @@ button { font: inherit; color: inherit; }
   -webkit-background-clip: text; background-clip: text; color: transparent;
   overflow-wrap: anywhere;
 }
-.cover-ornament { width: 34cqi; height: 3.4cqi; color: var(--foil); }
-.cover-line { font-style: italic; font-size: 4.6cqi; line-height: 1.45; max-width: 26ch; color: #d6c18a; }
-.cover-count { font-variant-caps: all-small-caps; letter-spacing: .12em; font-size: 4cqi; color: #b49a5c; margin-top: 2cqi; }
-.cover-hint { margin: 0; color: #a59a88; font-style: italic; font-size: 16px; transition: opacity .3s; }
+.cover-medallion { /* the emblem set into the cloth like an inlaid onlay */
+  display: block; width: 40cqi; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: #050508;
+  border: 1px solid var(--foil);
+  box-shadow: 0 0 0 1.4cqi var(--cloth), 0 0 0 calc(1.4cqi + 1px) var(--foil), inset 0 2px 8px rgba(0,0,0,.8), 0 3px 8px rgba(0,0,0,.35);
+}
+.cover-medallion img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.cover-line { font-style: italic; font-size: 4.4cqi; line-height: 1.45; max-width: 26ch; color: #d6c18a; }
+.cover-volume { font-variant-caps: all-small-caps; letter-spacing: .16em; font-size: 4.1cqi; color: #b49a5c; }
+.cover-ribbon { /* a bookmark ribbon hanging from between the pages */
+  position: absolute; top: calc(100% - 2px); left: 68%; width: 4.6cqi; height: 15cqi;
+  background: linear-gradient(90deg, #5e141b, var(--ribbon) 35%, #96303a 55%, #6a1820);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  filter: drop-shadow(0 3px 3px rgba(0,0,0,.45));
+}
+.cover-hint { margin: 46px 0 0; color: #a59a88; font-style: italic; font-size: 16px; transition: opacity .3s; }
 
 .cover.is-opening { background-color: transparent; background-image: none; opacity: 0; pointer-events: none; }
 .cover.is-opening .cover-board { transform: rotateY(-108deg); box-shadow: 0 0 0 rgba(0,0,0,0); }
@@ -170,20 +182,26 @@ button { font: inherit; color: inherit; }
 .toc-count { font-size: 19px; }
 .toc-sub { font-style: italic; color: var(--ink-soft); font-size: 16px; line-height: 1.4; }
 .toc-entry:hover .toc-title, .toc-entry:focus-visible .toc-title { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
-.toc-index { margin-top: 18px; padding-top: 22px; border-top: 1px solid var(--rule); }
-.colophon { margin: 34px 0 0; text-align: center; font-style: italic; font-size: 16px; color: var(--ink-faint); }
+.toc-index { margin-top: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--rule); }
+.toc-index + .toc { margin-top: 8px; }
 
-/* Frontispiece (left page) */
-.frontis { margin: 0 0 40px; text-align: center; }
-.frontis-plate { display: inline-block; padding: 11px; border: 1px solid var(--rule); background: var(--plate); cursor: pointer; box-shadow: 0 1px 2px rgba(60,40,20,.08), 0 14px 26px -14px rgba(60,40,20,.45); }
-.frontis-plate img { display: block; max-width: 100%; max-height: min(52vh, 470px); width: auto; height: auto; object-fit: contain; }
-.frontis figcaption { margin-top: 14px; font-style: italic; font-size: 16px; color: var(--ink-soft); }
-.small-head { margin: 0 0 12px; text-align: center; font-weight: 400; font-variant-caps: all-small-caps; letter-spacing: .14em; font-size: 18px; color: var(--accent); }
-.begin-list { list-style: none; margin: 0; padding: 0; }
-.begin-entry { display: flex; align-items: baseline; gap: 10px; width: 100%; padding: 9px 0; background: none; border: 0; cursor: pointer; text-align: left; }
-.begin-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 75%; }
-.begin-page { white-space: nowrap; font-style: italic; color: var(--ink-soft); }
-.begin-entry:hover .begin-title { color: var(--accent); text-decoration: underline; text-underline-offset: 4px; }
+/* Author portrait (left page) */
+.portrait-page { display: flex; align-items: center; justify-content: center; }
+.portrait { margin: 0; text-align: center; }
+.portrait-plate { /* an oval portrait mounted on a plate, like the front of an old book */
+  display: inline-block; padding: 22px 26px; background: var(--plate); border: 1px solid var(--rule);
+  box-shadow: 0 1px 2px rgba(60,40,20,.08), 0 18px 32px -16px rgba(60,40,20,.5);
+}
+.portrait-oval {
+  display: block; width: clamp(200px, 22vw, 270px); aspect-ratio: 4 / 5; border-radius: 50%; overflow: hidden;
+  background: #050508; border: 1px solid #b89a55;
+  box-shadow: 0 0 0 5px var(--plate), 0 0 0 6px var(--rule), inset 0 2px 10px rgba(0,0,0,.6);
+}
+.portrait-oval img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.portrait figcaption { display: flex; flex-direction: column; gap: 4px; margin-top: 26px; }
+.portrait-handle { font-variant-caps: all-small-caps; letter-spacing: .12em; font-size: 20px; color: var(--accent); text-decoration: none; }
+.portrait-handle:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.portrait-line { font-style: italic; font-size: 18px; color: var(--ink-soft); }
 
 /* ---------- Chapter ---------- */
 .page-single { padding: 40px clamp(22px, 6vw, 84px) 90px; }
@@ -300,6 +318,9 @@ button { font: inherit; color: inherit; }
   .spread { grid-template-columns: minmax(0, 1fr); }
   .spread::after { display: none; }
   .page-right { order: -1; border-bottom: 1px solid var(--rule); }
+  .spread .folio { display: none; }
+  .portrait-page { padding-top: 48px; }
+  .portrait-oval { width: 210px; }
   .page { padding: 42px 30px 72px; }
   .reader-book { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .reader-text { padding: 22px 28px 18px; }

@@ -79,6 +79,8 @@
     $$('[data-total]').forEach(el => { el.textContent = POSTS.length; });
     $$('[data-chapter-count]').forEach(el => { el.textContent = WORDS[chapters.length] || chapters.length; });
     if (CONFIG.coverLine) $$('[data-cover-line]').forEach(el => { el.textContent = CONFIG.coverLine; });
+    const firstYear = POSTS.reduce((min, post) => time(post) ? Math.min(min, new Date(time(post)).getFullYear()) : min, Infinity);
+    if (Number.isFinite(firstYear)) $$('[data-volume]').forEach(el => { el.textContent = `Volume I, since ${firstYear}`; });
     $$('[data-instagram-link]').forEach(el => { el.href = instagramUrl; el.target = '_blank'; el.rel = 'noreferrer'; });
   }
 
@@ -270,16 +272,6 @@
       <span class="toc-num">${c.roman}</span>
       <span class="toc-line"><span class="toc-title">${esc(c.name)}</span><span class="leader" aria-hidden="true"></span><span class="toc-count">${c.posts.length}<span class="vh"> pieces</span></span></span>
       <span class="toc-sub">${esc(c.sub)}</span></a></li>`).join('');
-
-    const frontis = featured[0];
-    $('#frontis').innerHTML = frontis
-      ? `<button class="frontis-plate" type="button" data-post-id="${esc(frontis.id)}" aria-label="Open ${esc(titleOf(frontis))}"><img src="${esc(frontis.media[0].src)}" alt=""></button>
-         <figcaption>p. ${pageNo(frontis)}, ${esc(titleOf(frontis))}</figcaption>`
-      : '';
-    $('#begin-list').innerHTML = featured.map(post => `<li><button class="begin-entry" type="button" data-post-id="${esc(post.id)}">
-      <span class="begin-title">${esc(titleOf(post))}</span><span class="leader" aria-hidden="true"></span><span class="begin-page">p. ${pageNo(post)}</span></button></li>`).join('');
-    $('.small-head').hidden = !featured.length;
-    wireOpeners($('#view-contents'), () => featured);
   }
 
   function renderChapter(chapter) {
