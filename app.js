@@ -147,13 +147,9 @@
       const caption = cleanCaption(post.caption || '');
       $('#reader-caption').textContent = caption;
       $('#reader-caption').hidden = !caption;
-      $('#copy-caption').hidden = !caption;
-      $('#copy-caption').textContent = 'Copy caption';
       $('#copy-link').textContent = 'Copy link';
       const filed = [...new Set([...themes(post), lang(post) !== HIDDEN_LANGUAGE ? lang(post) : '', form(post) !== GENERIC_FORM ? form(post) : ''].filter(Boolean))];
       $('#reader-tags').textContent = filed.length ? `Filed under ${filed.join(', ')}` : '';
-      $('#reader-instagram').href = post.source_url || instagramUrl;
-      $('#reader-instagram').textContent = post.source_url ? 'View this post on Instagram' : 'View on Instagram';
 
       const i = reader.sequence.indexOf(post);
       const many = reader.sequence.length > 1;
@@ -224,7 +220,6 @@
     $('#slide-next').addEventListener('click', () => { if (reader.slide < reader.active.media.length - 1) { reader.slide++; renderReader(); } });
     $('#prev-piece').addEventListener('click', () => turnPage(-1));
     $('#next-piece').addEventListener('click', () => turnPage(1));
-    $('#copy-caption').addEventListener('click', e => copyText(cleanCaption(reader.active?.caption || ''), e.currentTarget, 'Copy caption'));
     $('#copy-link').addEventListener('click', e => copyText(`${location.origin}${location.pathname}#piece-${reader.active.id}`, e.currentTarget, 'Copy link'));
 
     document.addEventListener('keydown', event => {
@@ -313,10 +308,23 @@
     store.set(false);
     try { history.replaceState(null, '', location.pathname); } catch (_) {}
     lastHash = '';
-    showView('contents');
-    window.scrollTo(0, 0);
+    const cover = $('#cover');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) {
+      showView('contents'); window.scrollTo(0, 0);
+      html.classList.remove('book-open'); $('#cover-board')?.focus();
+      return;
+    }
+    // Swing the cover shut over the pages: start it open, then let it close.
+    cover.classList.add('is-closing', 'is-shutting');
     html.classList.remove('book-open');
-    $('#cover-board')?.focus();
+    void cover.offsetWidth;
+    cover.classList.remove('is-closing');
+    window.setTimeout(() => {
+      cover.classList.remove('is-shutting');
+      showView('contents'); window.scrollTo(0, 0);
+      $('#cover-board')?.focus({ preventScroll: true });
+    }, 1150);
   }
 
   function showChapterView(chapter, scroll) {

@@ -46,14 +46,19 @@
   <main id="main" class="book">
     <section class="view" id="view-contents" aria-labelledby="contents-title">
       <div class="spread">
-        <div class="page page-left portrait-page">
-          <figure class="portrait">
-            <span class="portrait-plate"><span class="portrait-oval"><img src="  electricfieldon-logo.jpg" alt="The electricfieldon emblem: a fountain pen wrapped in a ribbon of blue ink" width="417" height="417"></span></span>
-            <figcaption>
-              <a class="portrait-handle" data-instagram-link href="https://www.instagram.com/electricfieldon/">@electricfieldon</a>
-              <span class="portrait-line">The hand behind these pages</span>
-            </figcaption>
-          </figure>
+        <div class="page page-left note-page">
+          <div class="author-note">
+            <svg class="nib" viewBox="0 0 80 134" aria-hidden="true">
+              <path class="nib-body" d="M22 8h36l4 32c0 20-10 34-22 56C28 74 18 60 18 40z"/>
+              <path class="nib-line" d="M20.2 24h39.6"/>
+              <circle class="nib-line" cx="40" cy="52" r="4.5"/>
+              <path class="nib-line" d="M40 56.5V94"/>
+              <path class="nib-drop" d="M40 106c0 0-8.5 10.5-8.5 16.5a8.5 8.5 0 0 0 17 0c0-6-8.5-16.5-8.5-16.5z"/>
+            </svg>
+            <p class="note-line">The hand behind these pages</p>
+            <span class="note-rule" aria-hidden="true"></span>
+            <a class="note-sign" data-instagram-link href="https://www.instagram.com/electricfieldon/">— electricfieldon</a>
+          </div>
           <span class="folio">i</span>
         </div>
         <div class="page page-right">
@@ -67,6 +72,7 @@
             <span class="toc-sub">Search for a line, or look by language and form</span>
           </a>
           <ol class="toc" id="toc"></ol>
+          <p class="close-book"><button type="button" class="link-button close-book-button" data-close-book>Close the book</button></p>
           <span class="folio">ii</span>
         </div>
       </div>
@@ -100,9 +106,7 @@
         <div class="reader-caption" id="reader-caption"></div>
         <p class="reader-tags" id="reader-tags"></p>
         <div class="reader-actions">
-          <button class="text-button" id="copy-caption" type="button">Copy caption</button>
           <button class="text-button" id="copy-link" type="button">Copy link</button>
-          <a class="text-button" id="reader-instagram" href="https://www.instagram.com/electricfieldon/" target="_blank" rel="noreferrer">View on Instagram</a>
         </div>
         <nav class="reader-turn" aria-label="Turn the page">
           <button class="turn-button" id="prev-piece" type="button">‹ Previous page</button>
